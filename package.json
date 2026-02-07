@@ -17,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/JustManty/CoffinBotJS/issues"
   },
-  "homepage": "https://github.com/JustManty/CoffinBotJS#readme"
+  "homepage": "https://github.com/JustManty/CoffinBotJS#readme",
+  "dependencies": {
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.2.3",
+    "runescape-api": "^2.1.6"
+  }
 }
