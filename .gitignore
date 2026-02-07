@@ -212,3 +212,4 @@ dist
 .pnp.*
 
 !/.env.dev
+/.env.dev
