@@ -3,7 +3,7 @@ require ('dotenv').config()
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const { TOKEN_DEV, TOKEN_PRD } = process.env;
+const { token } = require('./config/config.js')
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -47,8 +47,8 @@ const jobsFiles = fs.readdirSync(jobsPath).filter((file) => file.endsWith('.js')
 for (const file of jobsFiles) {
     const filePath = path.join(jobsPath, file);
     const job = require(filePath);
-    job.start(client, process.argv[2].toUpperCase() === 'PRD' ? "PRD" : "DEV");
+    job.start(client);
 }
 
 // Log in to Discord with your client's token
-client.login(process.argv[2].toUpperCase() === 'PRD' ? TOKEN_PRD : TOKEN_DEV);
+client.login(token);

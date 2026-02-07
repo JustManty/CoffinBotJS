@@ -155,7 +155,8 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+.env.prd
+.env.dev
 .env.development.local
 .env.test.local
 .env.production.local
@@ -210,3 +211,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+!/.env.dev
