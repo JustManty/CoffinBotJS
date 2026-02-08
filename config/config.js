@@ -15,7 +15,7 @@ function required(name) {
 }
 
 function getEnvArg(defaultEnv = 'DEV') {
-  const arg = process.argv.find(a => a.startsWith('-env='));
+  const arg = process.argv.find(a => a.startsWith('--env='));
   return (arg ? arg.split('=')[1] : defaultEnv).toUpperCase();
 }
 
