@@ -24,6 +24,7 @@ module.exports = {
   isProd: env === PRD,
   token: required('TOKEN'),
   clientId: required('CLIENT_ID'),
-  serverId: required('SERVER_ID'),
+  guildId: required('GUILD_ID'),
   ranksChannelId: required('RANKS_CHANNEL_ID'),
+  rankSubmissionChannelId: required('RANK_SUBMISSION_CHANNEL_ID'),
 };
