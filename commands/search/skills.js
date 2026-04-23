@@ -6,20 +6,42 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('skills')
         .setDescription('Displays the skill information for a given player.')
-        .addStringOption(option => option.setName('player').setDescription('The player to lookup skill information for.').setRequired(true))
-        .addBooleanOption(option => option.setName('ephemeral').setDescription('Should this message be viewable only by you?')),
+        .addStringOption(option => option
+            .setName('player')
+            .setDescription('The player to lookup skill information for.')
+            .setRequired(true))
+        .addStringOption(option =>option
+            .setName('leaderboard')
+            .setDescription('The leaderboard to lookup ranks on.')
+            .setRequired(true)
+            .setChoices(
+                { name: 'Normal', value: 'normal' },
+                { name: 'Ironman', value: 'ironman' },
+                { name: 'Hardcore Ironman', value: 'hardcore' },
+            ))
+        .addBooleanOption(option => option
+            .setName('ephemeral')
+            .setDescription('Should this message be viewable only by you?')),
     async execute(interaction) {
         const playerName = interaction.options.getString('player');
         const ephemeral = interaction.options.getBoolean('ephemeral');
+        const gameMode = interaction.options.getString('leaderboard');
+
+        let subheader = '';
+        switch (gameMode) {
+            case 'normal': subheader = 'NORMAL'; break;
+            case 'ironman': subheader = 'IRONMAN'; break;
+            case 'hardcore': subheader = 'HARDCORE IRONMAN'; break;
+        }
 
         try {
-            const player = await hiscores.getPlayer(playerName);
+            const player = await hiscores.getPlayer(playerName, gameMode);
 
-            const WIDTHS = [15, 7, 12, 9];
+            const WIDTHS = [15, 7, 14, 9];
 
             let table = rule(WIDTHS, '+', '=', '+', '=');
             table += '\n' + titleLine(playerName, WIDTHS);
-            table += '\n' + titleLine('SKILL INFORMATION', WIDTHS);
+            table += '\n' + titleLine(subheader + ' SKILL INFORMATION', WIDTHS);
             table += '\n' + rule(WIDTHS);
             table += '\n' + row(['Skill', 'Level', 'XP', 'Rank'], WIDTHS, ['center', 'center', 'center', 'center']);
             table += '\n' + rule(WIDTHS);
