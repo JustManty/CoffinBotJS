@@ -10,11 +10,6 @@ class Notification {
         this.name = name;
         this.currentRank = currentRank;
         this.newRank = newRank;
-        this.lastNotified = Date.now();
-    }
-
-    notify() {
-        this.lastNotified = Date.now();
     }
 
     matches(name, currentRank, newRank) {
@@ -67,8 +62,6 @@ module.exports = {
                                     n.matches(member.name, member.rank, targetRank)
                                 );
 
-                                const cooldownMs = hoursToMs(7.5);
-
                                 if (!existing) {
                                     client.channels.cache.get(ranksChannelId).send(
                                         isDemotion
@@ -78,15 +71,6 @@ module.exports = {
 
                                     updateCount++;
                                     notifications.push(new Notification(member.name, member.rank, targetRank));
-                                } else if (Date.now() > existing.lastNotified + cooldownMs) {
-                                    client.channels.cache.get(ranksChannelId).send(
-                                        isDemotion
-                                            ? `**${member.name}** is rank ${member.rank} but should only be ${targetRank}!`
-                                            : `**${member.name}** has earned enough experience to rank up from ${member.rank} to ${targetRank}!`
-                                    );
-
-                                    updateCount++;
-                                    existing.notify();
                                 }
                             }
                     }
